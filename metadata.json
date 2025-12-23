@@ -1,0 +1,8 @@
+{
+  "name": "ResearchGemini OS",
+  "description": "A futuristic Research Operating System (Research OS) designed to guide scholars through the entire PhD and research degree lifecycle with adaptive tools, integrity checks, and a crisis management system.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
