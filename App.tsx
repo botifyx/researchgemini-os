@@ -39,42 +39,46 @@ const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
   </div>
 );
 
+import { RequireAuth } from './components/RequireAuth';
+import { AuthModal } from './components/AuthModal';
+
 const App: React.FC = () => {
   return (
     <Router>
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
           <Route path="/journey" element={<ResearchJourney />} />
           <Route path="/journey/:slug" element={<ResearchJourney />} />
-          <Route path="/gps" element={<ResearchGPS />} />
-          <Route path="/scorecards" element={<Scorecards />} />
-          <Route path="/refiner" element={<TopicRefiner />} />
-          <Route path="/lit-coach" element={<LitCoach />} />
-          <Route path="/writing-coach" element={<WritingCoach />} />
-          <Route path="/methodology" element={<MethodologyAdvisor />} />
-          <Route path="/results-interpreter" element={<ResultsInterpreter />} />
-          <Route path="/publishing-advisor" element={<PublishingAdvisor />} />
-          <Route path="/publishing" element={<Publishing />} />
-          <Route path="/publishing/country-rules" element={<CountryRules />} />
-          <Route path="/publishing/decision-assistant" element={<DecisionAssistant />} />
-          <Route path="/publishing/supervisor-confirmation" element={<SupervisorConfirmation />} />
-          <Route path="/examiner-simulator" element={<ExaminerSimulator />} />
+          <Route path="/gps" element={<RequireAuth><ResearchGPS /></RequireAuth>} />
+          <Route path="/scorecards" element={<RequireAuth><Scorecards /></RequireAuth>} />
+          <Route path="/refiner" element={<RequireAuth><TopicRefiner /></RequireAuth>} />
+          <Route path="/lit-coach" element={<RequireAuth><LitCoach /></RequireAuth>} />
+          <Route path="/writing-coach" element={<RequireAuth><WritingCoach /></RequireAuth>} />
+          <Route path="/methodology" element={<RequireAuth><MethodologyAdvisor /></RequireAuth>} />
+          <Route path="/results-interpreter" element={<RequireAuth><ResultsInterpreter /></RequireAuth>} />
+          <Route path="/publishing-advisor" element={<RequireAuth><PublishingAdvisor /></RequireAuth>} />
+          <Route path="/publishing" element={<RequireAuth><Publishing /></RequireAuth>} />
+          <Route path="/publishing/country-rules" element={<RequireAuth><CountryRules /></RequireAuth>} />
+          <Route path="/publishing/decision-assistant" element={<RequireAuth><DecisionAssistant /></RequireAuth>} />
+          <Route path="/publishing/supervisor-confirmation" element={<RequireAuth><SupervisorConfirmation /></RequireAuth>} />
+          <Route path="/examiner-simulator" element={<RequireAuth><ExaminerSimulator /></RequireAuth>} />
           <Route path="/wellbeing" element={<WellbeingCoach />} />
-          <Route path="/integrity-guardian" element={<IntegrityGuardian />} />
+          <Route path="/integrity-guardian" element={<RequireAuth><IntegrityGuardian /></RequireAuth>} />
           <Route path="/tools" element={<Tools />} />
-          <Route path="/integrity" element={<Integrity />} />
+          <Route path="/integrity" element={<RequireAuth><Integrity /></RequireAuth>} />
           <Route path="/ethics" element={<EthicsManifesto />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/viva-simulator" element={<VivaSimulator />} />
-          <Route path="/ai" element={<AICompanion />} />
+          <Route path="/viva-simulator" element={<RequireAuth><VivaSimulator /></RequireAuth>} />
+          <Route path="/ai" element={<RequireAuth><AICompanion /></RequireAuth>} />
           <Route path="/help" element={<Help />} />
           <Route path="/community" element={<PlaceholderPage title="Scholar Community" />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+        <AuthModal />
       </Layout>
     </Router>
   );

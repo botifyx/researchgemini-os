@@ -42,6 +42,8 @@ import { CrisisModal } from './CrisisModal';
 import { EthicsModal } from './EthicsModal';
 import { TourGuide } from './TourGuide';
 import { Logo } from './Logo';
+import { useAuth } from '../lib/AuthContext';
+import { LogOut, User, LogIn } from 'lucide-react';
 
 export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,6 +53,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
     return localStorage.getItem('research_os_theme') === 'light' ? 'light' : 'dark';
   });
+  const { user, isAuthenticated, logout, openAuthModal } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -235,6 +238,39 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
+
+            {isAuthenticated ? (
+              <div className="flex items-center gap-3 ml-2 border-l border-slate-200 dark:border-white/10 pl-4">
+                <div className="hidden md:flex flex-col items-end">
+                  <span className="text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter leading-none">{user?.name}</span>
+                  <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Scholar_Verified</span>
+                </div>
+                <div className="relative group">
+                  <img
+                    src={user?.picture}
+                    alt={user?.name}
+                    className="w-10 h-10 rounded-xl border border-blue-500/20 shadow-lg shadow-blue-500/10 group-hover:scale-105 transition-transform"
+                  />
+                  <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-2 shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all z-[100]">
+                    <button
+                      onClick={logout}
+                      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/10 text-red-600 transition-colors"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      <span className="text-[10px] font-black uppercase tracking-widest leading-none">Initialize_Logout</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                onClick={openAuthModal}
+                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all hover:scale-105 active:scale-95 shadow-lg shadow-blue-900/20"
+              >
+                <LogIn className="w-3 h-3" />
+                Sign_In
+              </button>
+            )}
           </div>
         </div>
       </header>
