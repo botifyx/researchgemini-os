@@ -89,7 +89,7 @@ Date Exported: ${new Date().toLocaleDateString()}
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-16 lg:py-24 relative min-h-screen">
+    <div className="mx-auto px-4 py-16 lg:py-24 relative min-h-screen">
       
       {/* Toast Notification */}
       {showComingSoon && (

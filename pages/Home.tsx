@@ -138,7 +138,7 @@ export const Home: React.FC = () => {
       <section className="py-32 bg-slate-50 dark:bg-slate-950/50 border-y border-slate-200 dark:border-white/5 px-4 overflow-hidden relative">
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.07] pointer-events-none bg-[length:40px_40px] [background-image:linear-gradient(to_right,gray_1px,transparent_1px),linear-gradient(to_bottom,gray_1px,transparent_1px)]"></div>
         
-        <div className="max-w-7xl mx-auto relative">
+        <div className="mx-auto relative">
           <div className="text-center mb-24 relative">
              <div className="absolute -top-12 left-1/2 -translate-x-1/2 flex items-center gap-2 opacity-50">
                <div className="w-12 h-px bg-blue-500"></div>
@@ -338,7 +338,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* CORE FEATURES GRID */}
-      <section className="py-32 px-4 max-w-7xl mx-auto">
+      <section className="py-32 px-4 mx-auto">
         <div className="text-center mb-24">
            <h2 className="text-xs font-mono font-black text-blue-500 uppercase tracking-[0.5em] mb-4">Kernel_Modules</h2>
            <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter">High-Rigor Infrastructure</h3>

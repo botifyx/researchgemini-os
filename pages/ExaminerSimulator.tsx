@@ -34,7 +34,10 @@ export const ExaminerSimulator: React.FC = () => {
     setSimulation(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
+
       const prompt = `Act as a senior, critical, yet fair Doctoral Examiner for a prestigious university.
 
 Thesis Details:

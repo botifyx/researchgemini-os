@@ -1,50 +1,61 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { jwtDecode } from 'jwt-decode';
-
-interface UserProfile {
-    sub: string;
-    name: string;
-    given_name: string;
-    family_name: string;
-    picture: string;
-    email: string;
-    email_verified: boolean;
-}
+import { 
+    User, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    signOut, 
+    onAuthStateChanged 
+} from 'firebase/auth';
+import { auth } from './firebase';
 
 interface AuthContextType {
-    user: UserProfile | null;
+    user: User | null;
     isAuthenticated: boolean;
-    login: (credentialResponse: any) => void;
-    logout: () => void;
+    login: () => Promise<void>;
+    logout: () => Promise<void>;
     isAuthModalOpen: boolean;
     openAuthModal: () => void;
     closeAuthModal: () => void;
+    isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<UserProfile | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const savedUser = localStorage.getItem('research_os_user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
-        }
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setIsLoading(false);
+            if (currentUser) {
+                setIsAuthModalOpen(false);
+            }
+        });
+
+        return () => unsubscribe();
     }, []);
 
-    const login = (credentialResponse: any) => {
-        const decoded = jwtDecode<UserProfile>(credentialResponse.credential);
-        setUser(decoded);
-        localStorage.setItem('research_os_user', JSON.stringify(decoded));
-        setIsAuthModalOpen(false);
+    const login = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            console.error("Login failed", error);
+            throw error;
+        }
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('research_os_user');
+    const logout = async () => {
+        try {
+            await signOut(auth);
+            setUser(null);
+        } catch (error) {
+            console.error("Logout failed", error);
+        }
     };
 
     const openAuthModal = () => setIsAuthModalOpen(true);
@@ -58,7 +69,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             logout,
             isAuthModalOpen,
             openAuthModal,
-            closeAuthModal
+            closeAuthModal,
+            isLoading
         }}>
             {children}
         </AuthContext.Provider>

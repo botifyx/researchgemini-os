@@ -128,7 +128,7 @@ export const SupervisorConfirmation: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 pb-32">
+    <div className="mx-auto px-4 py-12 pb-32">
       <div className="mb-10">
         <Link to="/publishing" className="text-blue-500 flex items-center gap-2 text-sm font-bold mb-6 hover:underline uppercase tracking-widest transition-all">
           <ArrowLeft className="w-4 h-4" /> Back to Publishing

@@ -120,7 +120,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const utilityItems = [
     { name: 'AI Companion', path: '/ai', icon: Bot },
     { name: 'Wellbeing', path: '/wellbeing', icon: Heart },
-    { name: 'Help', path: '/help', icon: HelpCircle },
+    // { name: 'Help', path: '/help', icon: HelpCircle },
     { name: 'Tools', path: '/tools', icon: BookOpen },
   ];
 
@@ -137,7 +137,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between relative">
+        <div className="mx-auto h-16 flex items-center justify-between relative">
 
           <Link to="/" onClick={handleHomeClick}>
             <Logo size="md" />
@@ -242,24 +242,18 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             {isAuthenticated ? (
               <div className="flex items-center gap-3 ml-2 border-l border-slate-200 dark:border-white/10 pl-4">
                 <div className="hidden md:flex flex-col items-end">
-                  <span className="text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter leading-none">{user?.name}</span>
+                  <span className="text-[10px] font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter leading-none">{user?.displayName}</span>
                   <span className="text-[8px] font-mono text-slate-500 uppercase tracking-widest mt-0.5">Scholar_Verified</span>
                 </div>
-                <div className="relative group">
-                  <img
-                    src={user?.picture}
-                    alt={user?.name}
-                    className="w-10 h-10 rounded-xl border border-blue-500/20 shadow-lg shadow-blue-500/10 group-hover:scale-105 transition-transform"
-                  />
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-2 shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all z-[100]">
-                    <button
-                      onClick={logout}
-                      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/10 text-red-600 transition-colors"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span className="text-[10px] font-black uppercase tracking-widest leading-none">Initialize_Logout</span>
-                    </button>
-                  </div>
+                <div className="relative group flex items-center gap-4">
+                  <button
+                    onClick={logout}
+                    className="hidden lg:flex p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-xl transition-all border border-transparent hover:border-red-200 dark:hover:border-red-900/20"
+                    title="Logout"
+                  >
+                    <LogOut className="w-5 h-5" />
+                  </button>
+                  {/* Dropdown removed as it's redundant with the explicit button and often problematic */}
                 </div>
               </div>
             ) : (
@@ -327,6 +321,32 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 ))}
               </div>
             </div>
+            {/* Authentication Action for Mobile */}
+            {isAuthenticated ? (
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center gap-3 p-4 bg-red-50 dark:bg-red-900/10 text-red-600 rounded-2xl font-bold uppercase tracking-widest text-xs border border-red-200 dark:border-red-900/20 active:scale-95 transition-all"
+                >
+                  <LogOut className="w-4 h-4" /> Initialize_Logout
+                </button>
+              </div>
+            ) : (
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+                <button
+                  onClick={() => {
+                    openAuthModal();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center gap-3 p-4 bg-blue-600 text-white rounded-2xl font-bold uppercase tracking-widest text-xs active:scale-95 transition-all shadow-lg shadow-blue-900/20"
+                >
+                  <LogIn className="w-4 h-4" /> Sign In
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -337,7 +357,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       <footer className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-white/5 py-16 px-4 relative overflow-hidden transition-colors">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_var(--tw-gradient-stops))] from-blue-500/5 via-transparent to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+        <div className="mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
           <div className="col-span-1 md:col-span-1">
             <Link to="/" className="mb-6 block" onClick={handleHomeClick}>
               <Logo size="md" />
@@ -391,7 +411,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             </Link>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6 text-[10px] text-slate-500 dark:text-slate-600 font-mono tracking-widest uppercase text-center sm:text-left">
+        <div className="mx-auto mt-16 pt-8 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6 text-[10px] text-slate-500 dark:text-slate-600 font-mono tracking-widest uppercase text-center sm:text-left">
           <p className="leading-relaxed">
             © 2024 ResearchGemini OS. KERNEL_v1.0.4-LTS. <br className="sm:hidden" />
             <span className="text-slate-400 dark:text-slate-500 font-black">Designed, developed, and maintained by BotifyX.</span>

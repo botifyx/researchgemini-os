@@ -71,8 +71,11 @@ const PROBLEM_PRESETS = [
   "I'm overwhelmed by the volume of literature."
 ];
 
+import { useLogger } from '../lib/logging';
+
 export const ResearchGPS: React.FC = () => {
   const { progress } = useProgress();
+  const { log } = useLogger();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [specificProblem, setSpecificProblem] = useState('');
@@ -93,8 +96,17 @@ export const ResearchGPS: React.FC = () => {
     if (isGenerating) return;
     setIsGenerating(true);
     
+    log('ResearchGPS', 'calculate_route', {
+        phase: currentSyncPhase,
+        selfIdPhase: answers[0],
+        barrier: answers[1]
+    });
+    
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
+
       
       const prompt = `Act as the ResearchGPS Navigation Engine (ROS_CORE_v1). 
       

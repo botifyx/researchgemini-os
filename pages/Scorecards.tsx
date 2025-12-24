@@ -34,7 +34,7 @@ export const Scorecards: React.FC = () => {
   const currentScore = activeScorecard ? calculateScore(activeScorecard) : 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="mx-auto px-4 py-12">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
           <ClipboardList className="w-8 h-8 text-blue-500" /> Research Scorecards

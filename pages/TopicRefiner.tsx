@@ -15,8 +15,10 @@ import {
   Lightbulb
 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
+import { useLogger } from '../lib/logging';
 
 export const TopicRefiner: React.FC = () => {
+  const { log } = useLogger();
   const [formData, setFormData] = useState({
     area: '',
     topic: '',
@@ -33,8 +35,18 @@ export const TopicRefiner: React.FC = () => {
     setIsLoading(true);
     setResult(null);
 
+    // Log the refinement action
+    log('TopicRefiner', 'refine_topic', { 
+        area: formData.area, 
+        degree: formData.degree,
+        type: formData.type 
+    });
+
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
+
       const prompt = `Act as an academic topic refinement assistant.
 
 Input Context:

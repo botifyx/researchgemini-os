@@ -107,7 +107,10 @@ export const AICompanion: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
+
       const currentPhase = PHASES[progress.currentPhaseIndex];
       
       // Calculate scorecard history context
@@ -184,7 +187,7 @@ ${scorecardContext}
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 h-[calc(100vh-80px)] flex flex-col animate-in fade-in duration-1000 transition-colors">
+    <div className="mx-auto px-4 py-8 h-[calc(100vh-80px)] flex flex-col animate-in fade-in duration-1000 transition-colors">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
         <div>
           <div className="flex items-center gap-3 mb-1">

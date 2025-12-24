@@ -78,7 +78,7 @@ The intellectual labor of populating these nodes belongs solely to the scholar.
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 relative">
+    <div className="mx-auto px-4 py-12 relative">
       <IntegrityCallout />
 
       <div className="mb-12 flex flex-col md:flex-row justify-between items-end gap-6 mt-8">

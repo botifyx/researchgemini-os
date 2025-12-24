@@ -30,7 +30,10 @@ export const LitCoach: React.FC = () => {
     setAnalysis(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
+
       const prompt = `Act as an expert academic literature analysis coach. 
 I am a researcher with the following Research Question (RQ): "${rq}"
 

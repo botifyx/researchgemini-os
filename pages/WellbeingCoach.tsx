@@ -35,7 +35,10 @@ export const WellbeingCoach: React.FC = () => {
     setAdvice(null);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      const ai = new GoogleGenAI({
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+});
+
       const currentPhase = PHASES[progress.currentPhaseIndex].title;
       
       const prompt = `Act as a professional Research Wellbeing Coach specializing in doctoral mental health.

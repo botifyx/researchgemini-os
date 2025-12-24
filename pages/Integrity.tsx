@@ -4,7 +4,7 @@ import { ShieldAlert, CheckCircle2, AlertTriangle, Scale, Lock, ShieldCheck } fr
 
 export const Integrity: React.FC = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="mx-auto px-4 py-12">
       <div className="mb-12">
         <h1 className="text-3xl font-bold text-slate-100 flex items-center gap-3">
           <ShieldAlert className="w-8 h-8 text-blue-500" /> Integrity & Ethics Engine
